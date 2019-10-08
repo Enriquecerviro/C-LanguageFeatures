@@ -15,19 +15,10 @@ namespace LanguageFeatures.Controllers
     {
         public ViewResult Index()
         {
-            List<string> results = new List<string>();
+            ShoppingCart cart = new ShoppingCart { Products = Product.GetProducts() };
+            decimal cartTotal = cart.TotalPrices();
 
-            foreach (Product p in Product.GetProducts())
-            {
-                string name = p?.Name ?? "<No name>";
-                decimal? price = p?.Price ?? 0;
-
-                //Detecting Nested null Values
-                string relatedName = p?.Related?.Name ?? "<none>";
-
-                results.Add($"Name: {name}, Price: {price}, Related: {relatedName}");
-            }
-            return View(results);
+            return View("Index", new string[] { $"Total: {cartTotal:C2}" });
         }
     }
 }
