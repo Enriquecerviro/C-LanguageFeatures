@@ -16,6 +16,7 @@ namespace LanguageFeatures.Models
         public string Category { get; set; } = "Watersports";
         public decimal? Price { get; set; }
         public Product Related { get; set; }
+        public bool NameBeginWithS => Name?[0] == 'S';
 
         //read-only property,value can be assigned to in the type’s constructor
         public bool InStock { get; }

@@ -15,14 +15,30 @@ the extension method has been applied to by using the cartParam parameter.
 My method enumerates the Product objects in ShoppingCart and returns
 the sum of the Product.Price property values
         */
-        public static decimal TotalPrices(this ShoppingCart cartParam)
+        public static decimal TotalPrices(this IEnumerable<Product> products)
         {
             decimal total = 0;
-            foreach (Product prod in cartParam.Products)
+            foreach (Product prod in products)
             {
                 total += prod?.Price ?? 0;
             }
             return total;
         }
+        public static IEnumerable<Product> Filter
+            (
+        this IEnumerable<Product> productEnum,
+        Func<Product, bool> selector
+            )
+        {
+            foreach (Product prod in productEnum)
+            {
+                if (selector(prod))
+                {
+                    yield return prod;
+                }
+            }
+        }
+
+
     }
 }
